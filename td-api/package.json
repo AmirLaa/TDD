@@ -1,0 +1,24 @@
+{
+  "name": "thing-description-directory-api",
+  "version": "1.0.0",
+  "description": "This a the thing description directory API",
+  "main": "index.js",
+  "scripts": {
+    "prestart": "npm install",
+    "start": "node index.js"
+  },
+  "keywords": [
+    "swagger"
+  ],
+  "license": "Unlicense",
+  "private": true,
+  "dependencies": {
+    "ajv": "^7.2.4",
+    "axios": "^0.21.1",
+    "connect": "^3.2.0",
+    "js-yaml": "^3.3.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.12.0",
+    "oas3-tools": "^2.2.3"
+  }
+}

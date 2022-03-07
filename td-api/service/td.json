@@ -1,0 +1,130 @@
+{
+	"id": "891a2e71-2e35-46d1-a668-c4fd6829e47f",
+	"@context": [
+    "https://www.w3.org/2019/wot/td/v1",
+    {
+      "dCO_PoC": "http://www.domos-project.eu/dCO_PoC/0.0.1#"
+    },
+    {
+      "@language": "en"
+    }
+  ],
+    "@type": "dCO_PoC:AmbientSensor",		
+    "located-in": 
+	{
+		"room": "dCO_PoC:GenericRoom",
+		"appartment": "dCO_PoC:GenericAppartment",
+		"building": "dCO_PoC:House169",
+		"demo_site": "dCO_PoC:Sion",
+		"label": "The SolarPanelsMeter is located in the House169 of the Sion Demo site"
+	}
+    ,
+	"title": "Ambient Sensor",
+	"description": "The ambient temperature sensor TD for the house 169",
+    "base": "https://domos.oiken.ch",
+	"securityDefinitions": {
+		"basic": {
+			"scheme": "basic",
+            "in": "header"
+		}
+	},
+	"security": [
+		"basic"
+	],
+	"properties": {
+		"humidity": {
+            "@type": "dCO_PoC:Humidity",
+			"type": "object",
+            "properties": {
+                "constraint" :{
+                    "description":"The cloudio constraint",
+                    "type":"string"
+                },
+                "type":{
+                    "description":"The cloudio Type",
+                    "type":"string"
+                },
+                "timestamp":{
+                    "description":"The time of the measure",
+                    "type":"number"
+                },
+                "value":{
+                    "description":"The humidity",
+                    "type":"number",
+                     "unit": "dCO_PoC:Percentage"
+                }
+            },
+			"forms": [
+				{
+					"href": "/api/v1/data/7fea01af-ed1d-452e-8a5e-e9c92eb26b19/ambientSensor-1/relHumidity/datapoint",
+					"op": "readproperty",
+					"contentType": "application/json"
+				}
+			]
+        },
+        "temperature": {
+            "@type": "dCO_PoC:Temperature",
+			"type": "object",
+            "properties": {
+                "constraint" :{
+                    "description":"The cloudio constraint",
+                    "type":"string"
+                },
+                "type":{
+                    "description":"The cloudio Type",
+                    "type":"string"
+                },
+                "timestamp":{
+                    "description":"The time of the measure",
+                    "type":"number"
+                },
+                "value":{
+                    "description":"The temperature",
+                    "type":"number",
+                    "unit": "dCO_PoC:Celcius"
+                }
+            },
+			"forms": [
+				{
+					"href": "/api/v1/data/7fea01af-ed1d-452e-8a5e-e9c92eb26b19/ambientSensor-1/temperature/datapoint",
+					"op": "readproperty",
+					"contentType": "application/json"
+				}
+			]
+        },
+        "batteryLevel": {
+            "@type": "dCO_PoC:BatteryLevel",
+			"type": "object",
+            "properties": {
+                "constraint" :{
+                    "description":"The cloudio constraint",
+                    "type":"string"
+                },
+                "type":{
+                    "description":"The cloudio Type",
+                    "type":"string"
+                },
+                "timestamp":{
+                    "description":"The time of the measure",
+                    "type":"number"
+                },
+                "value":{
+                    "description":"The batteryLevel",
+                    "type":"number",
+                    "unit": "dCO_PoC:Percentage"
+                }
+            },
+			"forms": [
+				{
+					"href": "/api/v1/data/7fea01af-ed1d-452e-8a5e-e9c92eb26b19/ambientSensor-1/batteryLevel/datapoint",
+					"op": "readproperty",
+					"contentType": "application/json"
+				}
+			]
+        }
+	},
+	"actions": { 
+	},
+	"events": {
+	}
+}

@@ -1,0 +1,288 @@
+openapi: 3.0.0
+info:
+  title: Thing Description Directory API
+  description: This a the thing description directory API
+  version: 1.0.0
+servers:
+- url: http://localhost:443
+tags:
+- name: td
+  description: Thing Directory API
+- name: validation
+  description: Validation API
+- name: search
+  description: Search API
+paths:
+  /td:
+    get:
+      tags:
+      - td
+      summary: Retrieves the list of Thing Descriptions
+      operationId: tdGET
+      parameters: []
+      responses:
+        "200":
+          description: Successful response
+          
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-swagger-router-controller: Td
+  /td/{id}:
+    get:
+      tags:
+      - td
+      summary: Retrieves a Thing Description
+      operationId: tdIdGET
+      parameters:
+      - name: id
+        in: path
+        description: id of the Thing Description
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: 9asdj1jd1232
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+              examples:
+                response:
+                  $ref: '#/components/examples/ThingDescriptionWithID'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-swagger-router-controller: Td
+    put:
+      tags:
+      - td
+      summary: Creates a new Thing Description, or updates an existing one
+      operationId: tdIdPUT
+      parameters:
+      - name: id
+        in: path
+        description: id of the Thing Description
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: 9lk90ikj7yhj09
+      requestBody:
+        description: The Thing Description object
+        content:
+          application/json:
+            schema:
+              type: object
+            examples:
+              ThingDescription:
+                $ref: '#/components/examples/ThingDescriptionWithID'
+        required: true
+      responses:
+        "200":
+          description: Thing Description updated successfully
+        "201":
+          description: A new Thing Description is created
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-swagger-router-controller: Td
+    delete:
+      tags:
+      - td
+      summary: Deletes the Thing Description
+      operationId: tdIdDELETE
+      parameters:
+      - name: id
+        in: path
+        description: id of the Thing Description
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successful response
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-swagger-router-controller: Td
+  /validation:
+    get:
+      tags:
+      - validation
+      summary: Retrieves the validation result for a given Thing Description
+      description: |
+        The Thing Description should be provided as JSON in the request body.<br>
+        Note: This is currently not supported using Swagger UI.
+      operationId: validationGET
+      responses:
+        "200":
+          description: Validation Result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationResult'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-swagger-router-controller: Validation
+      
+  /search:
+    get:
+      tags:
+      - search
+      summary: Retrieves the validation result for a given Thing Description
+      description: |
+        The Thing Description should be provided as JSON in the request body.<br>
+        Note: This is currently not supported using Swagger UI.
+      operationId: searchGET
+      parameters:
+      - name: query
+        in: query
+        description: "description"
+        required: true
+        style: form
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Search Result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationResult'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-swagger-router-controller: Search
+components:
+  securitySchemes:
+    bearerAuth:            # arbitrary name for the security scheme
+      type: apiKey
+      in: query       # can be "header", "query" or "cookie"
+      name: X-API-KEY  # name of the header, query parameter or cookie
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+    ValidationResult:
+      type: object
+      properties:
+        valid:
+          type: boolean
+        errors:
+          type: array
+          items:
+            type: string
+      example:
+        valid: true
+        errors:
+        - errors
+        - errors
+  responses:
+    RespBadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    RespNotfound:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    RespInternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  examples:
+    ThingDescriptionWithID:
+      summary: Example Thing Description
+      value:
+        '@context': https://www.w3.org/2019/wot/td/v1
+        id: urn:example:1234
+        title: ExampleSensor
+        properties:
+          status:
+            forms:
+            - op:
+              - readproperty
+              href: https://example.com/status
+              contentType: text/html
+        security:
+        - nosec_sc
+        securityDefinitions:
+          nosec_sc:
+            scheme: nosec
+security:
+  - bearerAuth: []    
